@@ -1,9 +1,11 @@
+import { useIsomorphicLayoutEffect } from "@/helpers/initAnimations";
 import { apollo } from "@/lib/apollo";
 import { ApolloError, gql, useQuery } from "@apollo/client";
 import Error from "next/error";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { gsap } from "gsap";
+import React, { useRef, useState } from "react";
 
 const GET_RENDERS = gql`
   query {
@@ -35,18 +37,45 @@ function Galeria({
   renders,
   loading,
 }: {
-  renders: Array<{ url: string; title: string, height: number, width: number }>;
+  renders: Array<{ url: string; title: string; height: number; width: number }>;
   loading: boolean;
 }) {
   const [cols, setCols] = useState(2);
+  const container = useRef(null);
+
+  useIsomorphicLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      gsap
+        .timeline({
+          defaults: {
+            ease: "circ.out",
+          },
+          delay: 2,
+        })
+        .from(".init", {
+          x: -50,
+          opacity: 0,
+          stagger: 0.2,
+        })
+        .from(".img", {
+          opacity: 0,
+          scale: 0,
+          stagger: 0.2,
+        });
+    }, container);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <main className="">
+    <main ref={container}>
       <nav className="sticky top-0 bg-back p-6 z-40">
-        <Link href="/">&larr; volver</Link>
+        <Link className="init opacity-50 hover:opacity-100 group" href="/">
+          <span className="group-hover:-translate-x-3">&larr;</span> Volver
+        </Link>
 
         <div className="mt-6">
-        <h1 className="font-migra text-8xl">Galería</h1>
+          <h1 className="init font-migra text-8xl">Galería</h1>
         </div>
       </nav>
 
@@ -54,8 +83,7 @@ function Galeria({
         {!loading &&
           renders &&
           renders.map((render, index) => {
-
-            const [fs, setFs] = useState(false)
+            const [fs, setFs] = useState(false);
 
             return (
               <div
@@ -69,7 +97,7 @@ function Galeria({
                   width={400}
                   alt={render.title}
                   onClick={() => setFs(!fs)}
-                  className="w-full object-contain overflow-hidden cursor-pointer"
+                  className="img w-full object-contain overflow-hidden cursor-pointer"
                 />
                 <div className="select-none cursor-pointer w-full backdrop-blur-md duration-200 transition-all absolute top-0 text-back p-0 px-6 z-20 opacity-0 group-hover:py-6 group-hover:opacity-100">
                   &laquo; {render.title} &raquo;{" "}
@@ -77,7 +105,7 @@ function Galeria({
                 </div>
               </div>
             );
-})}
+          })}
       </section>
     </main>
   );

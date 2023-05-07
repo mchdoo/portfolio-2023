@@ -72,14 +72,14 @@ export default function Home({
             className="-z-20"
             style={{ objectFit: "cover", objectPosition: "center" }}
           />
-          <div className="relative inset-0 h-full flex flex-col md:p-0 p-8 justify-center items-end md:items-center">
+          <div className="relative inset-0 h-full flex flex-col md:p-0 p-8 justify-center items-center">
             <Image
               id="iso"
               src={isoImage}
               alt="Pedro Machado"
               className="tag"
             />
-            <span className="flex flex-col md:flex-row w-1/2 items-end md:items-center mt-6 md:justify-between">
+            <span className="flex flex-col md:flex-row w-1/2 items-center mt-6 md:justify-between">
               <p className="tag font-migra-italic text-back text-2xl md:text-3xl">
                 artist, designer
               </p>
