@@ -59,7 +59,7 @@ export default function Home({
         className={inter.className + "scroll-smooth cursor-default"}
       >
         <div
-          className="absolute h-20 w-20 backdrop-blur-md pointer-events-none rounded-full -z-10 blur-md"
+          className="hidden md:visible absolute h-20 w-20 backdrop-blur-md pointer-events-none rounded-full -z-10 blur-md"
           id="cursor"
         ></div>
 
@@ -72,14 +72,14 @@ export default function Home({
             className="-z-20"
             style={{ objectFit: "cover", objectPosition: "center" }}
           />
-          <div className="relative inset-0 h-full flex flex-col md:p-0 p-8 justify-center items-center">
+          <div className="relative inset-0 h-full flex flex-col md:p-0 p-12 justify-center items-center">
             <Image
               id="iso"
               src={isoImage}
               alt="Pedro Machado"
               className="tag"
             />
-            <span className="flex flex-col md:flex-row w-1/2 items-center mt-6 md:justify-between">
+            <span className="flex flex-col md:flex-row md:w-1/2 items-center mt-6 md:justify-between">
               <p className="tag font-migra-italic text-back text-2xl md:text-3xl">
                 artist, designer
               </p>
@@ -92,7 +92,7 @@ export default function Home({
               className="self-center text-back p-6 mt-6 rounded-full backdrop-blur-md hover:backdrop-brightness-150 backdrop-brightness-125"
               href={"/galeria"}
             >
-              Ver galería &rarr;
+              Ver galería -&gt;
             </Link>
           </div>
         </section>

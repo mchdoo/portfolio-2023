@@ -33,7 +33,7 @@ export const initAnimations = (container: RefObject<HTMLElement>) => {
           stagger: 0.3,
         })
         .to('#render', {
-          padding: '2rem',
+          padding: '0.75rem',
         })
         .to("#cursor", {
           scale: 1,
@@ -53,16 +53,14 @@ export const initAnimations = (container: RefObject<HTMLElement>) => {
         y: e.y + window.scrollY,
       });
 
-      gsap.to("#glow", {
-        x: -e.x / 30,
-        y: -e.y / 30,
-        z: 1
-      });
-
       gsap.to(".linkbox", {
         y: e.movementX / 2,
         x: e.movementY / 2,
-        stagger: 0.2,
+        stagger: {
+          each: 0.2,
+          from: 'center',
+          yoyo: true
+        },
         ease: "circ",
       });
 

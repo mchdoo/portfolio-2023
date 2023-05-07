@@ -6,6 +6,9 @@ export default function Document() {
       <Head>
         <title>Pedro Machado</title>
         <meta name="description" content="El portfolio de Pedro Machado." />
+        <meta property="og:title" content="Pedro Machado Portfolio"></meta>
+        <meta property="og:image" content="/escape.jpg"></meta>
+        <meta property="og:description" content="Mi bello portfolio!" />
       </Head>
       <body>
         <Main />

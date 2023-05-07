@@ -17,12 +17,12 @@ function Proyectos({proyectos}: {proyectos: Array<{ nombre: string; desc: string
           >
             <div className="inline-flex justify-between">
               <p className="relative uppercase text-xl ">{proyecto.nombre}</p>
-              <span
+              {proyecto.href ? <span
                 id="goto"
                 className="z-10 transition-all duration-150 absolute right-3 top-3 group-hover:text-xl group-hover:backdrop-blur-lg group-hover:-right-4 rounded-full w-10 h-10 grid place-items-center"
               >
-                &rarr;
-              </span>
+                -&gt;
+              </span> : <p className='opacity-50 text-xs'>(en breve)</p>}
             </div>
             <p className="font-sans lowercase text-right font-light">
               {proyecto.desc}

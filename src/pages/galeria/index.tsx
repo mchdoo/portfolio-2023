@@ -40,7 +40,6 @@ function Galeria({
   renders: Array<{ url: string; title: string; height: number; width: number }>;
   loading: boolean;
 }) {
-  const [cols, setCols] = useState(2);
   const container = useRef(null);
 
   useIsomorphicLayoutEffect(() => {
@@ -50,7 +49,7 @@ function Galeria({
           defaults: {
             ease: "circ.out",
           },
-          delay: 2,
+          delay: 0.5,
         })
         .from(".init", {
           x: -50,
@@ -60,18 +59,24 @@ function Galeria({
         .from(".img", {
           opacity: 0,
           scale: 0,
-          stagger: 0.2,
+          stagger: {
+            each: 0.1,
+            from: "random",
+          },
         });
     }, container);
 
     return () => ctx.revert();
   }, []);
 
+  const [viewing, setViewing] = useState<number | null>(null);
+
   return (
     <main ref={container}>
-      <nav className="sticky top-0 bg-back p-6 z-40">
-        <Link className="init opacity-50 hover:opacity-100 group" href="/">
-          <span className="group-hover:-translate-x-3">&larr;</span> Volver
+      {/* <div className={`absolute z-30 top-0 left-0 h-screen w-screen inset-0 backdrop-blur backdrop-brightness-50 pointer-events-none ${viewing != null && 'visible'}`}></div> */}
+      <nav className="sticky top-0 bg-back p-6 z-20">
+        <Link className="opacity-50 hover:opacity-80 group transition" href="/">
+          <span className="group-hover:translate-x-2">&lt;-</span> volver
         </Link>
 
         <div className="mt-6">
@@ -79,29 +84,38 @@ function Galeria({
         </div>
       </nav>
 
-      <section className={`columns-3xs md:columns-xs xl:columns-4 gap-2 p-2`}>
+      <section className={`columns-2 md:columns-xs xl:columns-4 gap-2 p-2`}>
+        {loading && <span>CARGANDO...</span>}
         {!loading &&
           renders &&
           renders.map((render, index) => {
-            const [fs, setFs] = useState(false);
-
             return (
               <div
                 key={index}
-                className={` overflow-hidden
-                 mb-2 group transition-all relative  max-h-[400px]`}
+                className={`overflow-hidden bg-fore/20
+                 mb-2 group transition-all ${
+                   viewing == index
+                     ? "scale-105 fixed top-6 h-max z-50 left-1/2 -translate-x-1/2"
+                     : "relative scale-100 max-h-[400px]"
+                 }`}
               >
                 <Image
                   src={render.url}
-                  height={400}
-                  width={400}
+                  height={render.height / 3}
+                  width={render.width / 3}
+                  style={{
+                    objectFit: "cover",
+                    objectPosition: "center",
+                    backgroundPosition: "center",
+                  }}
                   alt={render.title}
-                  onClick={() => setFs(!fs)}
+                  onClick={() => {
+                    viewing === index ? setViewing(null) : setViewing(index);
+                  }}
                   className="img w-full object-contain overflow-hidden cursor-pointer"
                 />
-                <div className="select-none cursor-pointer w-full backdrop-blur-md duration-200 transition-all absolute top-0 text-back p-0 px-6 z-20 opacity-0 group-hover:py-6 group-hover:opacity-100">
+                <div className="select-none cursor-pointer backdrop-brightness-90 w-full backdrop-blur-md duration-200 transition-all absolute top-0 text-back p-0 px-6 z-20 opacity-0 group-hover:py-6 group-hover:opacity-100">
                   &laquo; {render.title} &raquo;{" "}
-                  <span className="float-right">&#x26F6;</span>
                 </div>
               </div>
             );
