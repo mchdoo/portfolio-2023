@@ -7,11 +7,18 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      colors: {
+        fore: 'var(--fore)',
+        back: 'var(--back)',
+        accent: {
+          1: 'var(--accent-1)',
+          2: 'var(--accent-2)'
+        }
       },
+      fontFamily: {
+        'migra-italic': ['Migra Italic', 'serif'],
+        'migra': ['Migra', 'serif']
+      }
     },
   },
   plugins: [],

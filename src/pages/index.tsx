@@ -1,118 +1,116 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import Image from "next/image";
+import escapeImage from "../../public/escape.jpg";
+import isoImage from "../../public/iso.svg";
+import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ['latin'] })
+import { ScrollTrigger } from "gsap-trial/dist/ScrollTrigger";
+import { useEffect, useRef, useState } from "react";
+import { Head } from "next/document";
+import {
+  initAnimations,
+  useIsomorphicLayoutEffect,
+} from "@/helpers/initAnimations";
 
-export default function Home() {
+import { apollo } from "@/lib/apollo";
+
+import Contacto from "@/components/contacto";
+import Proyectos from "@/components/proyectos";
+
+import { gql } from "@apollo/client";
+import Link from "next/link";
+
+const GET_PROYECTOS = gql`
+  query {
+    proyectoCollection {
+      items {
+        nombre
+        desc
+        href
+      }
+    }
+  }
+`;
+
+const inter = Inter({ subsets: ["latin"] });
+
+export async function getServerSideProps() {
+  const { data: proyectos } = await apollo.query({ query: GET_PROYECTOS });
+
+  return {
+    props: {
+      proyectos: proyectos.proyectoCollection.items,
+    },
+  };
+}
+
+export default function Home({
+  proyectos,
+}: {
+  proyectos: Array<{ nombre: string; desc: string; href: string }>;
+}) {
+  const container = useRef<HTMLElement>(null);
+
+  initAnimations(container);
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
+    <>
+      <main
+        ref={container}
+        className={inter.className + "scroll-smooth cursor-default"}
+      >
+        <div
+          className="absolute h-20 w-20 backdrop-blur-md pointer-events-none rounded-full -z-10 blur-md"
+          id="cursor"
+        ></div>
+
+        <section id="inicio" className="relative h-screen w-screen p-8">
+          <Image
+            src={escapeImage}
+            alt="hero"
+            id="render"
+            fill
+            className="-z-20"
+            style={{ objectFit: "cover", objectPosition: "center" }}
+          />
+          <div className="relative inset-0 h-full flex flex-col md:p-0 p-8 justify-center items-end md:items-center">
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+              id="iso"
+              src={isoImage}
+              alt="Pedro Machado"
+              className="tag"
             />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
+            <span className="flex flex-col md:flex-row w-1/2 items-end md:items-center mt-6 md:justify-between">
+              <p className="tag font-migra-italic text-back text-2xl md:text-3xl">
+                artist, designer
+              </p>
+              <p className="tag uppercase font-thin text-back text-xl md:text-2xl">
+                necochea, argentina
+              </p>
             </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+            <Link
+             id="galeria-button"
+              className="self-center text-back p-6 mt-6 rounded-full backdrop-blur-md hover:backdrop-brightness-150 backdrop-brightness-125"
+              href={"/galeria"}
+            >
+              Ver galería &rarr;
+            </Link>
+          </div>
+        </section>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        <section
+          id="proyectos"
+          className="flex flex-col justify-center items-center gap-12 mt-32"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+          <Proyectos proyectos={proyectos} />
+        </section>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        <section
+          id="contacto"
+          className="flex flex-col justify-center items-center my-32"
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+          <Contacto />
+        </section>
+      </main>
+    </>
+  );
 }
