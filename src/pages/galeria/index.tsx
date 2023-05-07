@@ -95,7 +95,8 @@ function Galeria({
                 className={`overflow-hidden bg-fore/20
                  mb-2 group transition-all ${
                    viewing == index
-                     ? "scale-105 fixed top-6 h-max z-50 left-1/2 -translate-x-1/2"
+                     ? //  ? "scale-105 fixed top-6 h-max z-50 left-1/2 -translate-x-1/2"
+                       "ring-4 ring-accent-2"
                      : "relative scale-100 max-h-[400px]"
                  }`}
               >
