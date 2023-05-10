@@ -1,12 +1,12 @@
 import { RefObject, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
 
-
 export const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export const initAnimations = (container: RefObject<HTMLElement>) => {
   useIsomorphicLayoutEffect(() => {
+    
     let ctx = gsap.context(() => {
       gsap.set("#cursor", {
         scale: 0,
@@ -27,23 +27,28 @@ export const initAnimations = (container: RefObject<HTMLElement>) => {
           delay: 0.3,
           height: 0,
         })
+        .from("#tag-container", {
+          height: 0,
+          opacity: 0,
+        })
         .from(".tag", {
           y: 50,
           opacity: 0,
           stagger: 0.3,
-        })
-        .to('#render', {
-          padding: '0.75rem',
         })
         .to("#cursor", {
           scale: 1,
           overwrite: "auto",
           ease: "power3.out",
         })
-        .from('#galeria-button', {
+        .from("#galeria-button", {
           opacity: 0,
           padding: 0,
-          delay: 0.5,
+        })
+        .from('#scroll', {
+          filter: 'blur(20px)',
+          opacity: 0,
+          duration: 2,
         })
     }, container);
 
@@ -58,8 +63,8 @@ export const initAnimations = (container: RefObject<HTMLElement>) => {
         x: e.movementY / 2,
         stagger: {
           each: 0.2,
-          from: 'center',
-          yoyo: true
+          from: "center",
+          yoyo: true,
         },
         ease: "circ",
       });

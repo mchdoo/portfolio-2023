@@ -4,7 +4,9 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>Pedro Machado</title>
+        <title>PEDRO MACHADO</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <meta name="theme-color" content="#FDF9F3" />
         <meta name="description" content="El portfolio de Pedro Machado." />
         <meta property="og:title" content="Pedro Machado Portfolio"></meta>
         <meta property="og:image" content="/escape.jpg"></meta>

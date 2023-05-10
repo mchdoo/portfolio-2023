@@ -1,11 +1,12 @@
 import { useIsomorphicLayoutEffect } from "@/helpers/initAnimations";
 import { apollo } from "@/lib/apollo";
-import { ApolloError, gql, useQuery } from "@apollo/client";
-import Error from "next/error";
+import { gql } from "@apollo/client";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap } from "gsap";
 import React, { useRef, useState } from "react";
+import Marquee from "react-fast-marquee";
+
 
 const GET_RENDERS = gql`
   query {
@@ -47,23 +48,14 @@ function Galeria({
       gsap
         .timeline({
           defaults: {
-            ease: "circ.out",
+            ease: "power3.out",
+            duration: 0.8,
           },
-          delay: 0.5,
         })
-        .from(".init", {
-          x: -50,
+        .from("nav", {
+          height: 0,
           opacity: 0,
-          stagger: 0.2,
         })
-        .from(".img", {
-          opacity: 0,
-          scale: 0,
-          stagger: {
-            each: 0.1,
-            from: "random",
-          },
-        });
     }, container);
 
     return () => ctx.revert();
@@ -74,17 +66,21 @@ function Galeria({
   return (
     <main ref={container}>
       {/* <div className={`absolute z-30 top-0 left-0 h-screen w-screen inset-0 backdrop-blur backdrop-brightness-50 pointer-events-none ${viewing != null && 'visible'}`}></div> */}
-      <nav className="sticky top-0 bg-back p-6 z-20">
-        <Link className="opacity-50 hover:opacity-80 group transition" href="/">
-          <span className="group-hover:translate-x-2">&lt;-</span> volver
+      <nav className="border items-center border-fore sticky top-0 bg-back z-50 inline-flex w-full">
+        <Link
+          className="border-r border-fore h-full grid aspect-square place-items-center"
+          href="/"
+        >
+          &lt;-
         </Link>
 
-        <div className="mt-6">
-          <h1 className="init font-migra text-8xl">Galería</h1>
-        </div>
+        <h1 className="font-migra text-6xl leading-none p-6">Galería</h1>
       </nav>
+      <Marquee className="border-b border-fore uppercase" autoFill>
+        Preview – página en contrucción –&nbsp;
+      </Marquee>
 
-      <section className={`columns-2 md:columns-xs xl:columns-4 gap-2 p-2`}>
+      <section className={`columns-2 md:columns-xs xl:columns-4 gap-0`}>
         {loading && <span>CARGANDO...</span>}
         {!loading &&
           renders &&
@@ -92,12 +88,12 @@ function Galeria({
             return (
               <div
                 key={index}
-                className={`overflow-hidden bg-fore/20
-                 mb-2 group transition-all ${
+                className={`relative overflow-hidden
+                 group transition-all ${
                    viewing == index
                      ? //  ? "scale-105 fixed top-6 h-max z-50 left-1/2 -translate-x-1/2"
-                       "ring-4 ring-accent-2"
-                     : "relative scale-100 max-h-[400px]"
+                       "h-max"
+                     : "max-h-[400px]"
                  }`}
               >
                 <Image
@@ -113,9 +109,9 @@ function Galeria({
                   onClick={() => {
                     viewing === index ? setViewing(null) : setViewing(index);
                   }}
-                  className="img w-full object-contain overflow-hidden cursor-pointer"
+                  className="w-full object-contain overflow-hidden transition-all cursor-pointer"
                 />
-                <div className="select-none cursor-pointer backdrop-brightness-90 w-full backdrop-blur-md duration-200 transition-all absolute top-0 text-back p-0 px-6 z-20 opacity-0 group-hover:py-6 group-hover:opacity-100">
+                <div className="z-10 select-none cursor-pointer backdrop-brightness-90 w-full backdrop-blur-md duration-200 transition-all absolute top-0 text-back p-0 px-6 opacity-0 group-hover:py-6 group-hover:opacity-100">
                   &laquo; {render.title} &raquo;{" "}
                 </div>
               </div>
