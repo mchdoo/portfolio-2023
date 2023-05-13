@@ -7,6 +7,7 @@ export const useIsomorphicLayoutEffect =
 
 export const initAnimations = async (container: RefObject<HTMLElement>) => {
   useIsomorphicLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
 
     let ctx = gsap.context(() => {
       gsap.set("#cursor", {
@@ -67,30 +68,27 @@ export const initAnimations = async (container: RefObject<HTMLElement>) => {
           filter: "blur(20px)",
           opacity: 0,
           duration: 2,
-        }).then(()=>{
+        })
+        .then(() => {
           window.addEventListener("mousemove", (e) => {
             gsap.to("#cursor", {
               x: e.x,
               y: e.y + window.scrollY,
             });
-    
+
             gsap.to(".linkbox", {
               y: e.movementX / 2,
               x: e.movementY / 3,
               stagger: 0.1,
             });
-    
+
             gsap.to(".tag", {
               x: e.movementX / 40,
               y: e.movementY / 40,
               ease: "circ",
             });
           });
-          
-        })
-
-
-
+        });
     }, container);
 
     return () => ctx.revert();

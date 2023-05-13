@@ -6,7 +6,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import React, { useRef, useState } from "react";
 import Marquee from "react-fast-marquee";
-
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
 const GET_RENDERS = gql`
   query {
@@ -44,17 +44,18 @@ function Galeria({
   const container = useRef(null);
 
   useIsomorphicLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
 
-      gsap.to('nav', {
-        scrollTrigger: {
-          trigger: 'nav',
-          start: '+=2rem top',
-          scrub: 0.5,
-        },
-        ease: 'circ.out',
-        height: '4rem',
-        duration: 0.5,
-      });
+    gsap.to("nav", {
+      scrollTrigger: {
+        trigger: "nav",
+        start: "+=2rem top",
+        scrub: 0.5,
+      },
+      ease: "circ.out",
+      height: "4rem",
+      duration: 0.5,
+    });
 
     let ctx = gsap.context(() => {
       gsap
@@ -67,7 +68,7 @@ function Galeria({
         .from("nav", {
           height: 0,
           opacity: 0,
-        })
+        });
     }, container);
 
     return () => ctx.revert();
@@ -83,13 +84,15 @@ function Galeria({
           className="group border-r border-fore h-full grid aspect-square place-items-center"
           href="/"
         >
-          <span className="group-hover:-translate-x-2 transition">
-
-          &lt;-
-          </span>
+          <span className="group-hover:-translate-x-2 transition">&lt;-</span>
         </Link>
 
-        <h1 id="nav-title" className="font-migra uppercase text-3xl leading-none p-6">Galería</h1>
+        <h1
+          id="nav-title"
+          className="font-migra uppercase text-3xl leading-none p-6"
+        >
+          Galería
+        </h1>
       </nav>
       <Marquee className="border-b border-fore uppercase" autoFill>
         Preview – página en contrucción –&nbsp;
