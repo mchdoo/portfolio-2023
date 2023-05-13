@@ -44,6 +44,18 @@ function Galeria({
   const container = useRef(null);
 
   useIsomorphicLayoutEffect(() => {
+
+      gsap.to('nav', {
+        scrollTrigger: {
+          trigger: 'nav',
+          start: '+=2rem top',
+          scrub: 0.5,
+        },
+        ease: 'circ.out',
+        height: '4rem',
+        duration: 0.5,
+      });
+
     let ctx = gsap.context(() => {
       gsap
         .timeline({
@@ -66,15 +78,18 @@ function Galeria({
   return (
     <main ref={container}>
       {/* <div className={`absolute z-30 top-0 left-0 h-screen w-screen inset-0 backdrop-blur backdrop-brightness-50 pointer-events-none ${viewing != null && 'visible'}`}></div> */}
-      <nav className="border items-center border-fore sticky top-0 bg-back z-50 inline-flex w-full">
+      <nav className="border items-center border-fore sticky top-0 bg-back z-50 inline-flex w-full h-24">
         <Link
-          className="border-r border-fore h-full grid aspect-square place-items-center"
+          className="group border-r border-fore h-full grid aspect-square place-items-center"
           href="/"
         >
+          <span className="group-hover:-translate-x-2 transition">
+
           &lt;-
+          </span>
         </Link>
 
-        <h1 className="font-migra text-6xl leading-none p-6">Galería</h1>
+        <h1 id="nav-title" className="font-migra uppercase text-3xl leading-none p-6">Galería</h1>
       </nav>
       <Marquee className="border-b border-fore uppercase" autoFill>
         Preview – página en contrucción –&nbsp;

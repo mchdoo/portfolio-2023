@@ -74,14 +74,14 @@ export default function Home({
         className={inter.className + "scroll-smooth cursor-default"}
       >
         <div
-          className="hidden md:visible absolute h-20 w-20 backdrop-blur-md pointer-events-none rounded-full -z-10 blur-md"
+          className="cursor-crosshair border absolute h-20 w-20 backdrop-blur-md pointer-events-none rounded-full z-10"
           id="cursor"
         ></div>
 
         <section id="inicio" className="relative h-screen w-screen">
           <div
             id="hero-content"
-            className="relative inset-0 h-full flex flex-col p-8 md:p-20 justify-center md:items-between"
+            className="relative inset-0 h-full flex flex-col p-8 md:p-12 justify-center md:items-between"
           >
             <Image
               src={render.url}
@@ -101,7 +101,7 @@ export default function Home({
               />
               <Link
                 id="galeria-button"
-                className="min-w-fit backdrop-brightness-90 self-center text-back p-6 mt-6 rounded-full backdrop-blur-md hover:backdrop-brightness-100"
+                className="lg:backdrop-brightness-125 min-w-fit backdrop-brightness-90 self-center text-back p-6 mt-6 rounded-full backdrop-blur-md hover:backdrop-brightness-100"
                 href={"/galeria"}
               >
                 Ver galería -&gt;
@@ -130,7 +130,7 @@ export default function Home({
 
         <section
           id="proyectos"
-          className="flex flex-col items-start gap-12 mt-20 px-6"
+          className="flex flex-col md:flex-row items-start md:items-center gap-12 px-6 mt-20"
         >
           <Proyectos proyectos={proyectos} />
         </section>
