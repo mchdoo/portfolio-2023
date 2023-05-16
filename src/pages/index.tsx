@@ -74,7 +74,7 @@ export default function Home({
         className={inter.className + "scroll-smooth cursor-default"}
       >
         <div
-          className="cursor-crosshair border absolute h-20 w-20 backdrop-blur-md pointer-events-none rounded-full z-10"
+          className="hidden md:visible cursor-crosshair border absolute h-20 w-20 backdrop-blur-md pointer-events-none rounded-full z-10"
           id="cursor"
         ></div>
 
@@ -135,12 +135,12 @@ export default function Home({
           <Proyectos proyectos={proyectos} />
         </section>
 
-        <section
+        <footer
           id="contacto"
-          className="flex flex-col justify-center items-center my-32"
+          className="flex flex-col items-center gap-6 px-6 my-32"
         >
           <Contacto />
-        </section>
+        </footer>
       </main>
     </>
   );

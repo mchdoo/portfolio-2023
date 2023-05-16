@@ -29,6 +29,12 @@ export default function App({ Component, pageProps }: AppProps) {
     <main className={inter.className}>
       <Head>
         <title>PEDRO MACHADO — portfolio</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <meta name="theme-color" content="#FDF9F3" />
+        <meta name="description" content="El portfolio de Pedro Machado." />
+        <meta property="og:title" content="Pedro Machado Portfolio"></meta>
+        <meta property="og:image" content="/escape.jpg"></meta>
+        <meta property="og:description" content="Mi bello portfolio!" />
       </Head>
       <ApolloProvider client={apollo}>
         <Component {...pageProps} />
