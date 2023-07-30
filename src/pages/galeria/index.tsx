@@ -6,11 +6,11 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import React, { useRef, useState } from "react";
 import Marquee from "react-fast-marquee";
-import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import { AnimatePresence, motion } from "framer-motion";
 
 const GET_RENDERS = gql`
   query {
-    assetCollection {
+    assetCollection(where: { contentfulMetadata: { tags_exists: true } }) {
       items {
         url
         title
@@ -41,45 +41,14 @@ function Galeria({
   renders: Array<{ url: string; title: string; height: number; width: number }>;
   loading: boolean;
 }) {
-  const container = useRef(null);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  useIsomorphicLayoutEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-
-    gsap.to("nav", {
-      scrollTrigger: {
-        trigger: "nav",
-        start: "+=2rem top",
-        scrub: 0.5,
-      },
-      ease: "circ.out",
-      height: "4rem",
-      duration: 0.5,
-    });
-
-    let ctx = gsap.context(() => {
-      gsap
-        .timeline({
-          defaults: {
-            ease: "power3.out",
-            duration: 0.8,
-          },
-        })
-        .from("nav", {
-          height: 0,
-          opacity: 0,
-        });
-    }, container);
-
-    return () => ctx.revert();
-  }, []);
-
-  const [viewing, setViewing] = useState<number | null>(null);
-
+  const viewingRender = renders[selectedId!];
   return (
-    <main ref={container}>
+    <main>
+      {loading && <p>Loading...</p>}
       {/* <div className={`absolute z-30 top-0 left-0 h-screen w-screen inset-0 backdrop-blur backdrop-brightness-50 pointer-events-none ${viewing != null && 'visible'}`}></div> */}
-      <nav className="border items-center border-fore sticky top-0 bg-back z-50 inline-flex w-full h-24">
+      <nav className="border items-center border-fore sticky top-0 bg-back z-30 inline-flex w-full h-24">
         <Link
           className="group border-r border-fore h-full grid aspect-square place-items-center"
           href="/"
@@ -98,21 +67,17 @@ function Galeria({
         Preview – página en contrucción –&nbsp;
       </Marquee>
 
-      <section className={`columns-2 md:columns-xs xl:columns-4 gap-0`}>
+      <section className={`columns-2 md:columns-3 lg:columns-4 gap-2 p-2`}>
         {loading && <span>CARGANDO...</span>}
         {!loading &&
-          renders &&
           renders.map((render, index) => {
             return (
-              <div
+              <motion.div
+                onClick={() => setSelectedId(index)}
+                layoutId={index.toString()}
                 key={index}
-                className={`relative overflow-hidden
-                 group transition-all ${
-                   viewing == index
-                     ? //  ? "scale-105 fixed top-6 h-max z-50 left-1/2 -translate-x-1/2"
-                       "h-max"
-                     : "max-h-[400px]"
-                 }`}
+                className={`touch-none relative overflow-hidden select-none
+                 group transition-all min-h-max mb-2`}
               >
                 <Image
                   src={render.url}
@@ -124,17 +89,48 @@ function Galeria({
                     backgroundPosition: "center",
                   }}
                   alt={render.title}
-                  onClick={() => {
-                    viewing === index ? setViewing(null) : setViewing(index);
-                  }}
-                  className="w-full object-contain overflow-hidden transition-all cursor-pointer"
+                  className="w-full h-full rounded object-contain overflow-hidden transition-all cursor-pointer"
                 />
-                <div className="z-10 select-none cursor-pointer backdrop-brightness-90 w-full backdrop-blur-md duration-200 transition-all absolute top-0 text-back p-0 px-6 opacity-0 group-hover:py-6 group-hover:opacity-100">
-                  &laquo; {render.title} &raquo;{" "}
-                </div>
-              </div>
+                <button
+                  onClick={() => setSelectedId(null)}
+                  className="absolute top-2  text-xl text-back p-2 w-fit h-6 rounded-full hidden group-hover:flex items-center gap-2 ml-2"
+                >
+                  &#x26F6; <span className="text-sm">hacé click!</span>
+                </button>
+              </motion.div>
             );
           })}
+        <AnimatePresence mode="wait">
+          {selectedId && (
+            <motion.div
+              animate={false}
+              onClick={() => setSelectedId(null)}
+              className="fixed inset-0 bg-black/50 z-50 flex justify-center p-6"
+            >
+              <motion.div
+                layoutId={selectedId.toString()}
+                className="p-3 rounded-lg bg-back h-fit grid place-items-center"
+              >
+                <motion.h2 className="text-4xl font-migra-italic mb-2">
+                  — {viewingRender.title} —
+                </motion.h2>
+                <Image
+                  src={viewingRender.url}
+                  alt="display render"
+                  height={viewingRender.height}
+                  width={viewingRender.width}
+                  className="max-h-[80vh] w-auto rounded border border-accent-2"
+                />
+              </motion.div>
+              <button
+                onClick={() => setSelectedId(null)}
+                className="bg-back text-fore p-2 w-6 h-6 rounded-full grid place-content-center ml-2"
+              >
+                &#10005;
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
     </main>
   );

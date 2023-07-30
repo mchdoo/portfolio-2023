@@ -34,18 +34,30 @@ const GET_PROYECTOS = gql`
 
 const inter = Inter({ subsets: ["latin"] });
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
+  const rendersPosiblesId = [
+    "jvNi7ncl8tnn0fxmBDQrb",
+    "7KEl0uxuCfnbhRmP2fwROJ",
+    "2fhMQKK4i8u9zQ9fLo9dmI",
+  ];
+
+  const selectedId =
+    rendersPosiblesId[Math.floor(Math.random() * rendersPosiblesId.length)];
+
   const { data: proyectos } = await apollo.query({ query: GET_PROYECTOS });
-  const { data: render } = await apollo.query({
+  const { data: render, loading } = await apollo.query({
     query: gql`
-      query {
-        asset(id: "7xinD0xC3kjmDLZqC8tJI7") {
+      query Render($selectedId: String!) {
+        asset(id: $selectedId) {
           url
           height
           width
         }
       }
     `,
+    variables: {
+      selectedId,
+    },
   });
 
   return {
@@ -73,11 +85,6 @@ export default function Home({
         ref={container}
         className={inter.className + "scroll-smooth cursor-default"}
       >
-        <div
-          className="cursor-crosshair border absolute h-20 w-20 backdrop-blur-md pointer-events-none rounded-full z-10"
-          id="cursor"
-        ></div>
-
         <section id="inicio" className="relative h-screen w-screen">
           <div
             id="hero-content"
@@ -101,10 +108,10 @@ export default function Home({
               />
               <Link
                 id="galeria-button"
-                className="lg:backdrop-brightness-125 min-w-fit backdrop-brightness-90 self-center text-back p-6 mt-6 rounded-full backdrop-blur-md hover:backdrop-brightness-100"
+                className="self-center min-w-fit p-3 mt-6 rounded-full bg-back text-fore text-xs"
                 href={"/galeria"}
               >
-                Ver galería -&gt;
+                Más renders -&gt;
               </Link>
             </div>
             <div
