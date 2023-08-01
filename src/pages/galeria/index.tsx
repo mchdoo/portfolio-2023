@@ -14,6 +14,7 @@ const GET_RENDERS = gql`
       items {
         url
         title
+        description
         width
         height
       }
@@ -38,12 +39,18 @@ function Galeria({
   renders,
   loading,
 }: {
-  renders: Array<{ url: string; title: string; height: number; width: number }>;
+  renders: Array<{
+    url: string;
+    title: string;
+    height: number;
+    width: number;
+    description: string;
+  }>;
   loading: boolean;
 }) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const viewingRender = renders[selectedId!];
+  const viewingRender = renders[selectedId! - 1];
   return (
     <main>
       {loading && <p>Loading...</p>}
@@ -73,8 +80,7 @@ function Galeria({
           renders.map((render, index) => {
             return (
               <motion.div
-                onClick={() => setSelectedId(index)}
-                layoutId={index.toString()}
+                onClick={() => setSelectedId(index + 1)}
                 key={index}
                 className={`touch-none relative overflow-hidden select-none
                  group transition-all min-h-max mb-2`}
@@ -91,43 +97,55 @@ function Galeria({
                   alt={render.title}
                   className="w-full h-full rounded object-contain overflow-hidden transition-all cursor-pointer"
                 />
-                <button
+                <motion.div
                   onClick={() => setSelectedId(null)}
-                  className="absolute top-2  text-xl text-back p-2 w-fit h-6 rounded-full hidden group-hover:flex items-center gap-2 ml-2"
+                  className="opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto transition rounded text-center w-full p-6 absolute top-0 text-back bg-gradient-to-b from-black/50"
                 >
-                  &#x26F6; <span className="text-sm">hacé click!</span>
-                </button>
+                  «{render.title}»
+                </motion.div>
               </motion.div>
             );
           })}
         <AnimatePresence mode="wait">
           {selectedId && (
             <motion.div
-              animate={false}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setSelectedId(null)}
-              className="fixed inset-0 bg-black/50 z-50 flex justify-center p-6"
+              className="fixed backdrop-blur-md inset-0 bg-black/50 z-50 flex justify-center p-6"
             >
               <motion.div
-                layoutId={selectedId.toString()}
+                initial={{ y: 200, scale: 0.8, opacity: 0 }}
+                animate={{ y: 0, scale: 1, opacity: 1 }}
+                exit={{ y: 100, scale: 0.8, opacity: 0 }}
                 className="p-3 rounded-lg bg-back h-fit grid place-items-center"
               >
-                <motion.h2 className="text-4xl font-migra-italic mb-2">
+                <h2 className="text-4xl font-migra-italic">
                   — {viewingRender.title} —
-                </motion.h2>
+                </h2>
+                {viewingRender.description && (
+                  <h2 className="text-sm opacity-60 w-96 p-2 rounded text-center">
+                    {viewingRender.description}
+                  </h2>
+                )}
                 <Image
                   src={viewingRender.url}
                   alt="display render"
                   height={viewingRender.height}
                   width={viewingRender.width}
-                  className="max-h-[80vh] w-auto rounded border border-accent-2"
+                  className="mt-2 max-h-[80vh] w-auto rounded border border-accent-2"
                 />
               </motion.div>
-              <button
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
                 onClick={() => setSelectedId(null)}
-                className="bg-back text-fore p-2 w-6 h-6 rounded-full grid place-content-center ml-2"
+                className="cursor-pointer bg-back text-fore p-2 w-6 h-6 rounded-full grid place-content-center ml-2"
               >
                 &#10005;
-              </button>
+              </motion.button>
             </motion.div>
           )}
         </AnimatePresence>

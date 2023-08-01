@@ -19,6 +19,7 @@ import Proyectos from "@/components/proyectos";
 import { gql } from "@apollo/client";
 import Link from "next/link";
 import RenderResult from "next/dist/server/render-result";
+import { AnimatePresence, motion } from "framer-motion";
 
 const GET_PROYECTOS = gql`
   query {
@@ -35,17 +36,13 @@ const GET_PROYECTOS = gql`
 const inter = Inter({ subsets: ["latin"] });
 
 export async function getStaticProps() {
-  const rendersPosiblesId = [
-    "jvNi7ncl8tnn0fxmBDQrb",
-    "7KEl0uxuCfnbhRmP2fwROJ",
-    "2fhMQKK4i8u9zQ9fLo9dmI",
-  ];
+  const rendersPosiblesId = ["6lD3JuM9cCIB3GLMXIBDhY"];
 
   const selectedId =
     rendersPosiblesId[Math.floor(Math.random() * rendersPosiblesId.length)];
 
   const { data: proyectos } = await apollo.query({ query: GET_PROYECTOS });
-  const { data: render, loading } = await apollo.query({
+  const { data: render } = await apollo.query({
     query: gql`
       query Render($selectedId: String!) {
         asset(id: $selectedId) {
@@ -74,6 +71,7 @@ export default function Home({
 }: {
   proyectos: Array<{ nombre: string; desc: string; href: string }>;
   render: { url: string; height: number; width: number };
+  loading: boolean;
 }) {
   const container = useRef<HTMLElement>(null);
 
@@ -96,6 +94,8 @@ export default function Home({
               width={render.width}
               alt="hero"
               id="render"
+              priority={true}
+              quality={100}
               className="-z-20 absolute top-0 left-0 h-screen p-3 rounded-3xl"
               style={{ objectFit: "cover", objectPosition: "center" }}
             />
