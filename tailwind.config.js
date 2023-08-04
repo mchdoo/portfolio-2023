@@ -11,8 +11,8 @@ module.exports = {
         fore: "var(--fore)",
         back: "var(--back)",
         accent: {
-          1: "var(--accent-1)",
-          2: "var(--accent-2)",
+          1: "#2d7296",
+          2: "#dca632",
         },
       },
       fontFamily: {
@@ -21,9 +21,6 @@ module.exports = {
       },
       fontWeight: {
         DEFAULT: 400,
-      },
-      height: {
-        screen: "calc(var(--vh, 1vh) * 100);",
       },
     },
   },

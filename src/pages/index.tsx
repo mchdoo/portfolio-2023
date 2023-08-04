@@ -83,7 +83,7 @@ export default function Home({
         ref={container}
         className={inter.className + "scroll-smooth cursor-default"}
       >
-        <section id="inicio" className="relative h-screen w-screen">
+        <section id="inicio" className="relative fillscreen w-screen">
           <div
             id="hero-content"
             className="relative inset-0 h-full flex flex-col p-8 md:p-12 justify-center md:items-between"

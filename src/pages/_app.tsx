@@ -17,14 +17,6 @@ const inter = Inter({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  useEffect(() => {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-
-    
-    
-  }, []);
-
   return (
     <main className={inter.className}>
       <Head>

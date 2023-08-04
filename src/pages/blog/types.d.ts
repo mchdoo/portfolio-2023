@@ -1,3 +1,5 @@
+import type { Document } from "@contentful/rich-text-types";
+
 export interface PostType {
   titulo: string;
   fechaDeEntrada: Date;
@@ -7,16 +9,19 @@ export interface PostType {
   featureImage: {
     url: string;
   };
-}
-
-export interface AllIdsType {
-  porfolioPostCollection: {
-    items: [
-      {
-        sys: {
-          id: string;
-        };
-      }
-    ];
+  tags: string[];
+  desarrollo: {
+    json: Document;
   };
 }
+
+type Node = {
+  content: [
+    {
+      nodeType: string;
+      value: string;
+      marks: [];
+      data: {};
+    }
+  ];
+};
