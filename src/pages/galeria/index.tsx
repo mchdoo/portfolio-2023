@@ -6,7 +6,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import React, { useRef, useState } from "react";
 import Marquee from "react-fast-marquee";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, delay, motion } from "framer-motion";
 
 const GET_RENDERS = gql`
   query {
@@ -55,7 +55,7 @@ function Galeria({
     <main>
       {loading && <p>Loading...</p>}
       {/* <div className={`absolute z-30 top-0 left-0 h-screen w-screen inset-0 backdrop-blur backdrop-brightness-50 pointer-events-none ${viewing != null && 'visible'}`}></div> */}
-      <nav className="border items-center border-fore sticky top-0 bg-back z-30 inline-flex w-full h-24">
+      <nav className="border-b items-center border-fore sticky top-0 bg-back z-30 inline-flex w-full h-24">
         <Link
           className="group border-r border-fore h-full grid aspect-square place-items-center"
           href="/"
@@ -76,36 +76,41 @@ function Galeria({
 
       <section className={`columns-2 md:columns-3 lg:columns-4 gap-2 p-2`}>
         {loading && <span>CARGANDO...</span>}
-        {!loading &&
-          renders.map((render, index) => {
-            return (
-              <motion.div
-                onClick={() => setSelectedId(index + 1)}
-                key={index}
-                className={`touch-none relative overflow-hidden select-none
-                 group transition-all min-h-max mb-2`}
-              >
-                <Image
-                  src={render.url}
-                  height={render.height / 3}
-                  width={render.width / 3}
-                  style={{
-                    objectFit: "cover",
-                    objectPosition: "center",
-                    backgroundPosition: "center",
-                  }}
-                  alt={render.title}
-                  className="w-full h-full rounded object-contain overflow-hidden transition-all cursor-pointer"
-                />
+        <AnimatePresence presenceAffectsLayout>
+          {!loading &&
+            renders.map((render, index) => {
+              return (
                 <motion.div
-                  onClick={() => setSelectedId(null)}
-                  className="opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto transition rounded text-center w-full p-6 absolute top-0 text-back bg-gradient-to-b from-black/50"
+                  transition={{ delay: index * 0.1 }}
+                  initial={{ opacity: 0, y: -30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  onClick={() => setSelectedId(index + 1)}
+                  key={index}
+                  className={`touch-none relative overflow-hidden select-none
+                group transition-all min-h-max mb-2`}
                 >
-                  «{render.title}»
+                  <Image
+                    src={render.url}
+                    height={render.height / 5}
+                    width={render.width / 5}
+                    style={{
+                      objectFit: "cover",
+                      objectPosition: "center",
+                      backgroundPosition: "center",
+                    }}
+                    alt={render.title}
+                    className="w-full h-full rounded object-contain overflow-hidden transition-all cursor-pointer"
+                  />
+                  <motion.div
+                    onClick={() => setSelectedId(null)}
+                    className="opacity-0 h-0 group-hover:opacity-100 group-hover:h-auto transition rounded text-center w-full p-6 absolute top-0 text-back bg-gradient-to-b from-black/50"
+                  >
+                    «{render.title}»
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            );
-          })}
+              );
+            })}
+        </AnimatePresence>
         <AnimatePresence mode="wait">
           {selectedId && (
             <motion.div
@@ -113,7 +118,7 @@ function Galeria({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedId(null)}
-              className="fixed backdrop-blur-md inset-0 bg-black/50 z-50 flex justify-center p-6"
+              className="fixed backdrop-blur-md inset-0 bg-black/50 z-40 flex justify-center p-6"
             >
               <motion.div
                 initial={{ y: 200, scale: 0.8, opacity: 0 }}
@@ -125,7 +130,7 @@ function Galeria({
                   — {viewingRender.title} —
                 </h2>
                 {viewingRender.description && (
-                  <h2 className="text-sm opacity-60 w-96 p-2 rounded text-center">
+                  <h2 className="text-sm opacity-60 max-w-sm p-2 rounded text-center">
                     {viewingRender.description}
                   </h2>
                 )}
@@ -138,13 +143,12 @@ function Galeria({
                 />
               </motion.div>
               <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, scale: 0 }}
-                onClick={() => setSelectedId(null)}
-                className="cursor-pointer bg-back text-fore p-2 w-6 h-6 rounded-full grid place-content-center ml-2"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 0.8, y: 0 }}
+                exit={{ opacity: 0, y: 16 }}
+                className="absolute bottom-0 left-0 w-full text-back py-6 text-center"
               >
-                &#10005;
+                cerrar
               </motion.button>
             </motion.div>
           )}

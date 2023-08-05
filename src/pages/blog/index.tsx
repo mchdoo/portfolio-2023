@@ -37,22 +37,25 @@ export async function getStaticProps() {
 function BlogPage({ posts }: { posts: PostType[] }) {
   return (
     <main>
-      <nav className="items-center border-fore sticky top-0 bg-back z-30 inline-flex w-full">
-        <Link className="group h-full grid p-6 place-items-center" href="/">
+      <nav className="border-b items-center border-fore sticky top-0 bg-back z-30 inline-flex w-full h-24">
+        <Link
+          className="group border-r border-fore h-full grid aspect-square place-items-center"
+          href="/"
+        >
           <span className="group-hover:-translate-x-2 transition">&lt;-</span>
         </Link>
 
         <h1
           id="nav-title"
-          className="font-migra-italic text-4xl leading-none p-6"
+          className="font-migra uppercase text-3xl leading-none p-6"
         >
-          Blog
+          Blogposts
         </h1>
       </nav>
 
-      <section className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <section className="p-6 grid grid-cols-1 divide-y-2 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post, index) => {
-          const [fecha, setFecha] = useState('—');
+          const [fecha, setFecha] = useState("—");
 
           useEffect(() => {
             setFecha(
@@ -65,7 +68,7 @@ function BlogPage({ posts }: { posts: PostType[] }) {
           return (
             <Link
               key={index}
-              className="group cursor-pointer p-6 border border-fore hover:ring-4 ring-accent-2 transition"
+              className="group cursor-pointer p-6 transition hover:bg-accent-2/30 rounded-3xl"
               href={"blog/" + post.sys.id}
             >
               <div className="flex gap-1 mb-1 self-center">

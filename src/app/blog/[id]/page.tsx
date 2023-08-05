@@ -50,7 +50,6 @@ async function PostPage({ params }: { params: { id: string } }) {
           href="/"
         >
           <span className="group-hover:-translate-x-2 transition">&lt;-</span>{" "}
-          volver
         </Link>
       </nav>
       {post && (
@@ -76,6 +75,14 @@ async function PostPage({ params }: { params: { id: string } }) {
           />
 
           <Desarrollo document={post.desarrollo.json} />
+
+          <p className="font-migra-italic text-3xl mt-10">···</p>
+          <Link
+            href={"/blog"}
+            className="hover:underline underline-offset-4 font-migra-italic text-5xl opacity-80 mt-10 select-none"
+          >
+            El fín
+          </Link>
         </main>
       )}
     </main>
