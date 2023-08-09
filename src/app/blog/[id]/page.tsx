@@ -1,5 +1,5 @@
 import { apollo } from "@/lib/apollo";
-import { PostType } from "@/pages/blog/types";
+import { PostType } from "@/app/blog/types";
 import { gql } from "@apollo/client";
 import { error } from "console";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
@@ -44,14 +44,6 @@ async function PostPage({ params }: { params: { id: string } }) {
 
   return (
     <main className="text-center">
-      <nav className="items-center border-fore sticky top-0 z-30 inline-flex w-full">
-        <Link
-          className="group h-full flex gap-2 p-6 place-items-center"
-          href="/"
-        >
-          <span className="group-hover:-translate-x-2 transition">&lt;-</span>{" "}
-        </Link>
-      </nav>
       {post && (
         <main className="grid place-items-center p-3">
           <div className="flex gap-3 self-center  ">

@@ -1,10 +1,8 @@
-import { useIsomorphicLayoutEffect } from "@/helpers/initAnimations";
 import { apollo } from "@/lib/apollo";
 import { gql } from "@apollo/client";
 import Image from "next/image";
 import Link from "next/link";
-import { gsap } from "gsap";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Marquee from "react-fast-marquee";
 import { AnimatePresence, delay, motion } from "framer-motion";
 
@@ -90,6 +88,10 @@ function Galeria({
                 group transition-all min-h-max mb-2`}
                 >
                   <Image
+                    priority
+                    onDrag={(e) => {
+                      e.preventDefault();
+                    }}
                     src={render.url}
                     height={render.height / 5}
                     width={render.width / 5}
@@ -135,11 +137,12 @@ function Galeria({
                   </h2>
                 )}
                 <Image
+                  priority
                   src={viewingRender.url}
                   alt="display render"
                   height={viewingRender.height}
                   width={viewingRender.width}
-                  className="mt-2 max-h-[80vh] w-auto rounded border border-accent-2"
+                  className="mt-2 max-h-[80vh] w-auto rounded border border-accent-2 bg-accent-2"
                 />
               </motion.div>
               <motion.button
