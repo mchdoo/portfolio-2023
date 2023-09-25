@@ -19,10 +19,10 @@ export default function RootLayout({
           <div className="inline-flex justify-between w-full md:justify-start gap-2">
             <BackButton />
             <Image
+              style={{ width: "auto", height: "auto" }}
               height={50}
               width={50}
               alt="PM"
-              className="justify-self-center"
               src={"/favicon.ico"}
             />
           </div>

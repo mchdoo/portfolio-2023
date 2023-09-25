@@ -9,6 +9,7 @@ import Desarrollo from "./desarrollo";
 
 async function fetchPost(id: string) {
   console.warn("id: ", id);
+
   const { data, error } = await apollo.query({
     query: gql`
       query GetPost($id: String!) {
@@ -71,7 +72,7 @@ async function PostPage({ params }: { params: { id: string } }) {
           <p className="font-migra-italic text-3xl mt-10">···</p>
           <Link
             href={"/blog"}
-            className="hover:underline underline-offset-4 font-migra-italic text-5xl opacity-80 mt-10 select-none"
+            className="hover:underline underline-offset-4 font-migra-italic text-5xl opacity-80 mt-10 select-none mb-16"
           >
             El fín
           </Link>

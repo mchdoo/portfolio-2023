@@ -5,15 +5,14 @@ function Icon() {
   return (
     <svg
       className="inline"
-      data-testid="geist-icon"
       fill="none"
       height="16"
       width="16"
-      shape-rendering="geometricPrecision"
+      shapeRendering="geometricPrecision"
       stroke="currentColor"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
       viewBox="0 0 24 24"
     >
       <path d="M7 17L17 7"></path>
@@ -43,8 +42,8 @@ export default function Desarrollo({ document }: { document: Document }) {
   };
 
   return (
-    <div className="max-w-lg text-lg mt-6">
+    <article className="max-w-lg mt-6 prose prose-lg text-left ">
       {documentToReactComponents(document, options)}
-    </div>
+    </article>
   );
 }
