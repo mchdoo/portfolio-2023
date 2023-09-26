@@ -39,7 +39,7 @@ async function BlogPage() {
         # Todos los posts
       </p>
       <section className="grid grid-cols-1 divide-y-2 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post, index) => (
+        {posts?.map((post, index) => (
           <PostCard post={post} key={index} />
         ))}
       </section>

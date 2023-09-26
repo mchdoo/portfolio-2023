@@ -54,7 +54,7 @@ export default function PostCard({ post }: { post: PostType }) {
       </div>
       <Image
         priority={true}
-        src={post.featureImage.url}
+        src={post.featureImage?.url}
         height={200}
         width={500}
         alt="blogpost picture"
