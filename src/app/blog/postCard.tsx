@@ -1,5 +1,3 @@
-"use client";
-
 import { PostType } from "./types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -52,14 +50,15 @@ export default function PostCard({ post }: { post: PostType }) {
           {fecha} · Pedro Machado
         </p>
       </div>
-      <Image
-        priority={true}
-        src={post.featureImage?.url}
-        height={200}
-        width={500}
-        alt="blogpost picture"
-        className="w-full transition z-20 rounded-3xl"
-      />
+      {post.featureImage && (
+        <Image
+          src={post.featureImage?.url}
+          height={200}
+          width={500}
+          alt="blogpost picture"
+          className="w-full transition z-20 rounded-3xl"
+        />
+      )}
     </Link>
   );
 }
