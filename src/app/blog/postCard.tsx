@@ -1,3 +1,5 @@
+"use client";
+
 import { PostType } from "./types";
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -21,6 +23,7 @@ export default function PostCard({ post }: { post: PostType }) {
 
   return (
     <Link
+      prefetch={false}
       href={"blog/" + post.sys.id}
       className="cursor-pointer group flex flex-col border-fore relative"
     >
