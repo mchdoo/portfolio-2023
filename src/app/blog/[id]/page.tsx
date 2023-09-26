@@ -59,13 +59,15 @@ async function PostPage({ params }: { params: { id: string } }) {
           </div>
           <h1 className="text-5xl font-migra mt-4">{post.titulo}</h1>
           <p className="opacity-50 text-sm">{fecha}</p>
-          <Image
-            alt={"Feature image " + post.titulo}
-            src={post.featureImage.url}
-            height={300}
-            width={500}
-            className="rounded-full my-5 border border-fore"
-          />
+          {post.featureImage && (
+            <Image
+              alt={"Feature image " + post.titulo}
+              src={post.featureImage.url}
+              height={300}
+              width={500}
+              className="rounded-full my-5 border border-fore"
+            />
+          )}
 
           <Desarrollo document={post.desarrollo.json} />
 
