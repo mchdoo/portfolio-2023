@@ -10,6 +10,7 @@ import { client } from "@/lib/contentful";
 import type { Entry } from "contentful";
 
 async function PostPage({ params }: { params: { id: string } }) {
+  //@ts-ignore
   const post: PostType = await client.getEntry(params.id);
 
   const fecha = new Date(post.fields.fechaDeEntrada).toLocaleDateString(

@@ -7,6 +7,7 @@ import { client } from "@/lib/contentful";
 async function getAllPosts() {
   const posts = await client.getEntries({ content_type: "portfolioPost" });
 
+  //@ts-ignore
   return posts.items as PostType[];
 }
 
