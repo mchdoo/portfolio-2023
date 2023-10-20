@@ -42,7 +42,7 @@ async function PostPage({ params }: { params: { id: string } }) {
               src={"https:" + post.fields.featureImage.fields.file.url}
               height={300}
               width={500}
-              className="rounded-3xl my-5 shadow-lg w-full"
+              className="rounded-3xl my-5 shadow-lg w-full md:max-w-xl"
             />
           )}
 
