@@ -2,29 +2,12 @@ import { PostType } from "./types";
 import { apollo } from "@/lib/apollo";
 import { gql } from "@apollo/client";
 import PostCard from "./postCard";
+import { client } from "@/lib/contentful";
 
 async function getAllPosts() {
-  const { data: posts, loading } = await apollo.query({
-    query: gql`
-      query {
-        portfolioPostCollection {
-          items {
-            titulo
-            fechaDeEntrada
-            sys {
-              id
-            }
-            featureImage {
-              url
-            }
-            tags
-          }
-        }
-      }
-    `,
-  });
+  const posts = await client.getEntries({ content_type: "portfolioPost" });
 
-  return posts.portfolioPostCollection.items as PostType[];
+  return posts.items as PostType[];
 }
 
 async function BlogPage() {
@@ -35,9 +18,11 @@ async function BlogPage() {
       <p className="mb-2 uppercase font-semibold opacity-60">
         # Todos los posts
       </p>
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <section className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {/* <pre>{JSON.stringify(posts[0], null, 2)}</pre> */}
+
         {posts?.map((post, index) => (
-          <PostCard post={post} key={index} />
+          <PostCard post={post as PostType} key={index} />
         ))}
       </section>
     </main>

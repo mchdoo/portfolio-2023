@@ -6,49 +6,25 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import Link from "next/link";
 import Image from "next/image";
 import Desarrollo from "./desarrollo";
-
-async function fetchPost(id: string) {
-  console.warn("id: ", id);
-
-  const { data, error } = await apollo.query({
-    query: gql`
-      query GetPost($id: String!) {
-        portfolioPost(id: $id) {
-          titulo
-          tags
-          featureImage {
-            url
-          }
-          fechaDeEntrada
-          desarrollo {
-            json
-          }
-        }
-      }
-    `,
-    variables: { id },
-  });
-
-  console.log("error", error?.message);
-
-  return data as { portfolioPost: PostType };
-}
+import { client } from "@/lib/contentful";
+import type { Entry } from "contentful";
 
 async function PostPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+  const post: PostType = await client.getEntry(params.id);
 
-  const { portfolioPost: post } = await fetchPost(id);
-
-  const fecha = new Date(post.fechaDeEntrada).toLocaleDateString("es-ar", {
-    dateStyle: "full",
-  });
+  const fecha = new Date(post.fields.fechaDeEntrada).toLocaleDateString(
+    "es-ar",
+    {
+      dateStyle: "full",
+    }
+  );
 
   return (
     <main className="text-center">
       {post && (
-        <main className="grid place-items-center p-3">
+        <main className="grid place-items-center py-4 px-6">
           <div className="flex gap-3 self-center  ">
-            {post.tags.map((tag, index) => (
+            {post.fields.tags.map((tag, index) => (
               <p
                 key={index}
                 className="cursor-pointer hover:-translate-y-1 transition w-fit font-semibold p-1 px-2 text-xs rounded-full bg-accent-2/20 uppercase text-accent-2"
@@ -57,19 +33,19 @@ async function PostPage({ params }: { params: { id: string } }) {
               </p>
             ))}
           </div>
-          <h1 className="text-5xl font-migra mt-4">{post.titulo}</h1>
+          <h1 className="text-5xl font-migra mt-4">{post.fields.titulo}</h1>
           <p className="opacity-50 text-sm">{fecha}</p>
-          {post.featureImage && (
+          {post.fields.featureImage && (
             <Image
-              alt={"Feature image " + post.titulo}
-              src={post.featureImage.url}
+              alt={"Feature image " + post.fields.titulo}
+              src={"https:" + post.fields.featureImage.fields.file.url}
               height={300}
               width={500}
-              className="rounded-full my-5 border border-fore"
+              className="rounded-3xl my-5 shadow-lg w-full"
             />
           )}
 
-          <Desarrollo document={post.desarrollo.json} />
+          <Desarrollo document={post.fields.desarrollo} />
 
           <p className="font-migra-italic text-3xl mt-10">···</p>
           <Link

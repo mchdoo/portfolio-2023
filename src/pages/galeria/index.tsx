@@ -89,9 +89,6 @@ function Galeria({
                 >
                   <Image
                     priority
-                    onDrag={(e) => {
-                      e.preventDefault();
-                    }}
                     src={render.url}
                     height={render.height / 5}
                     width={render.width / 5}

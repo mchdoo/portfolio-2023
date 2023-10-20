@@ -109,9 +109,9 @@ export default function Home({
               <Link
                 id="galeria-button"
                 className="self-center min-w-fit p-3 mt-6 rounded-full bg-back text-fore text-xs"
-                href={"/galeria"}
+                href={"/blog"}
               >
-                Más renders -&gt;
+                Ir al blog -&gt;
               </Link>
             </div>
             <div

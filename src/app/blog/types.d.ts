@@ -1,17 +1,23 @@
 import type { Document } from "@contentful/rich-text-types";
+import { Asset, Entry } from "contentful";
 
-export interface PostType {
-  titulo: string;
-  fechaDeEntrada: Date;
-  sys: {
-    id: number;
+interface ImageType extends Asset {
+  fields: {
+    file: {
+      url: string;
+    };
   };
-  featureImage: {
-    url: string;
-  };
-  tags: string[];
-  desarrollo: {
-    json: Document;
+}
+
+export interface PostType extends Entry {
+  fields: {
+    titulo: string;
+    fechaDeEntrada: Date;
+    featureImage: ImageTypes;
+    tags: string[];
+    desarrollo: {
+      json: Document;
+    };
   };
 }
 

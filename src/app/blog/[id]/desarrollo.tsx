@@ -1,7 +1,7 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { Document, INLINES, Hyperlink } from "@contentful/rich-text-types";
+import { Document, INLINES } from "@contentful/rich-text-types";
 
-function Icon() {
+function Icon(): JSX.Element {
   return (
     <svg
       className="inline"
@@ -21,7 +21,7 @@ function Icon() {
   );
 }
 
-export default function Desarrollo({ document }: { document: Document }) {
+export default function Desarrollo({ document }: any) {
   const options = {
     renderNode: {
       [INLINES.HYPERLINK]: (node: any) => {
