@@ -2,29 +2,30 @@ import Link from "next/link";
 import Image from "next/image";
 import Desarrollo from "./desarrollo";
 import { client } from "@/lib/contentful";
-
+import { TypePortfolioPostSkeleton } from "@/lib/types";
+import { Asset } from "contentful";
 
 async function PostPage({ params }: { params: { id: string } }) {
-  //@ts-ignore
-  const post = await client.getEntry<TypePortfolioPost>(params.id);
+  const post =
+    await client.withoutUnresolvableLinks.getEntry<TypePortfolioPostSkeleton>(
+      params.id
+    );
 
-  {/* @ts-ignore */}
-  const fecha = new Date(post.sys.updatedAt).toLocaleDateString(
-    "es-ar",
-    {
-      dateStyle: "long",
-    }
-  );
+  const fecha = new Date(post.sys.updatedAt).toLocaleDateString("es-ar", {
+    dateStyle: "long",
+  });
 
-    return (
+  const image = post.fields.featureImage.fields;
+
+  return (
     <main className="text-center">
-      {post && (
+      {post.fields && (
         <main className="grid place-items-center py-4 px-6">
           <span className="h-16"></span>
-          <h1 className="text-5xl font-migra mb-4">{post.fields.titulo.toString()}</h1>
+          <h1 className="text-5xl font-migra mb-4">{post.fields.titulo}</h1>
           <p className="opacity-50 text-sm mb-4">{fecha}</p>
           <div className="flex gap-2 items-baseline ">
-            {post.fields.tags.map((tag: string, index:number) => (
+            {post.fields.tags.map((tag: string, index: number) => (
               <p
                 key={index}
                 className="transition-all text-xs text-accent-2 hover:bg-accent-2/20 cursor-pointer bg-accent-2/10 rounded p-1.5 px-2"
@@ -33,10 +34,10 @@ async function PostPage({ params }: { params: { id: string } }) {
               </p>
             ))}
           </div>
-          {post.fields.featureImage && (
+          {image && (
             <Image
               alt={"Feature image " + post.fields.titulo}
-              src={"https:" + post.fields.featureImage.fields!.file.url}
+              src={"https:" + image.file.url}
               height={300}
               width={500}
               className="rounded-3xl my-5 shadow-lg w-full md:max-w-xl"

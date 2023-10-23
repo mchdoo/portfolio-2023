@@ -1,15 +1,29 @@
-import type {Asset, ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleCode} from "contentful";
+import type {
+  Asset,
+  AssetFields,
+  ChainModifiers,
+  Entry,
+  EntryFieldTypes,
+  EntrySkeletonType,
+  LocaleCode,
+} from "contentful";
 
 export interface TypePortfolioPostFields {
   titulo: EntryFieldTypes.Symbol;
   tags: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
-  featureImage?: Asset;
+  featureImage: EntryFieldTypes.AssetLink;
   desarrollo?: EntryFieldTypes.RichText;
   fechaDeEntrada: EntryFieldTypes.Date;
 }
 
-export type TypePortfolioPostSkeleton = EntrySkeletonType<TypePortfolioPostFields, "portfolioPost">;
-export type TypePortfolioPost<Modifiers extends ChainModifiers, Locales extends LocaleCode> = Entry<TypePortfolioPostSkeleton, Modifiers, Locales>;
+export type TypePortfolioPostSkeleton = EntrySkeletonType<
+  TypePortfolioPostFields,
+  "portfolioPost"
+>;
+export type TypePortfolioPost<
+  Modifiers extends ChainModifiers,
+  Locales extends LocaleCode
+> = Entry<TypePortfolioPostSkeleton, Modifiers, Locales>;
 
 export interface TypeProyectoFields {
   nombre: EntryFieldTypes.Symbol;
@@ -17,8 +31,14 @@ export interface TypeProyectoFields {
   href?: EntryFieldTypes.Text;
 }
 
-export type TypeProyectoSkeleton = EntrySkeletonType<TypeProyectoFields, "proyecto">;
-export type TypeProyecto<Modifiers extends ChainModifiers, Locales extends LocaleCode> = Entry<TypeProyectoSkeleton, Modifiers, Locales>;
+export type TypeProyectoSkeleton = EntrySkeletonType<
+  TypeProyectoFields,
+  "proyecto"
+>;
+export type TypeProyecto<
+  Modifiers extends ChainModifiers,
+  Locales extends LocaleCode
+> = Entry<TypeProyectoSkeleton, Modifiers, Locales>;
 
 export interface TypeRenderFields {
   imageFile?: EntryFieldTypes.AssetLink;
@@ -26,4 +46,7 @@ export interface TypeRenderFields {
 }
 
 export type TypeRenderSkeleton = EntrySkeletonType<TypeRenderFields, "render">;
-export type TypeRender<Modifiers extends ChainModifiers, Locales extends LocaleCode> = Entry<TypeRenderSkeleton, Modifiers, Locales>;
+export type TypeRender<
+  Modifiers extends ChainModifiers,
+  Locales extends LocaleCode
+> = Entry<TypeRenderSkeleton, Modifiers, Locales>;
