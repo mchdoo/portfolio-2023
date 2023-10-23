@@ -15,8 +15,6 @@ async function PostPage({ params }: { params: { id: string } }) {
     dateStyle: "long",
   });
 
-  const image = post.fields.featureImage.fields;
-
   return (
     <main className="text-center">
       {post.fields && (
@@ -34,15 +32,13 @@ async function PostPage({ params }: { params: { id: string } }) {
               </p>
             ))}
           </div>
-          {image && (
-            <Image
-              alt={"Feature image " + post.fields.titulo}
-              src={"https:" + image.file.url}
-              height={300}
-              width={500}
-              className="rounded-3xl my-5 shadow-lg w-full md:max-w-xl"
-            />
-          )}
+          <Image
+            alt={"Feature image " + post.fields.titulo}
+            src={"https:" + post.fields.featureImage.fields.file.url}
+            height={300}
+            width={500}
+            className="rounded-3xl my-5 shadow-lg w-full md:max-w-xl"
+          />
 
           <Desarrollo document={post.fields.desarrollo} />
 
