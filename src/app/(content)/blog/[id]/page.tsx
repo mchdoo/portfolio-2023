@@ -1,45 +1,42 @@
-import { apollo } from "@/lib/apollo";
-import { PostType } from "@/app/blog/types";
-import { gql } from "@apollo/client";
-import { error } from "console";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Link from "next/link";
 import Image from "next/image";
 import Desarrollo from "./desarrollo";
 import { client } from "@/lib/contentful";
-import type { Entry } from "contentful";
+
 
 async function PostPage({ params }: { params: { id: string } }) {
   //@ts-ignore
-  const post: PostType = await client.getEntry(params.id);
+  const post = await client.getEntry<TypePortfolioPost>(params.id);
 
-  const fecha = new Date(post.fields.fechaDeEntrada).toLocaleDateString(
+  {/* @ts-ignore */}
+  const fecha = new Date(post.sys.updatedAt).toLocaleDateString(
     "es-ar",
     {
-      dateStyle: "full",
+      dateStyle: "long",
     }
   );
 
-  return (
+    return (
     <main className="text-center">
       {post && (
         <main className="grid place-items-center py-4 px-6">
-          <div className="flex gap-3 self-center  ">
-            {post.fields.tags.map((tag, index) => (
+          <span className="h-16"></span>
+          <h1 className="text-5xl font-migra mb-4">{post.fields.titulo.toString()}</h1>
+          <p className="opacity-50 text-sm mb-4">{fecha}</p>
+          <div className="flex gap-2 items-baseline ">
+            {post.fields.tags.map((tag: string, index:number) => (
               <p
                 key={index}
-                className="cursor-pointer hover:-translate-y-1 transition w-fit font-semibold p-1 px-2 text-xs rounded-full bg-accent-2/20 uppercase text-accent-2"
+                className="transition-all text-xs text-accent-2 hover:bg-accent-2/20 cursor-pointer bg-accent-2/10 rounded p-1.5 px-2"
               >
                 {tag}
               </p>
             ))}
           </div>
-          <h1 className="text-5xl font-migra mt-4">{post.fields.titulo}</h1>
-          <p className="opacity-50 text-sm">{fecha}</p>
           {post.fields.featureImage && (
             <Image
               alt={"Feature image " + post.fields.titulo}
-              src={"https:" + post.fields.featureImage.fields.file.url}
+              src={"https:" + post.fields.featureImage.fields!.file.url}
               height={300}
               width={500}
               className="rounded-3xl my-5 shadow-lg w-full md:max-w-xl"

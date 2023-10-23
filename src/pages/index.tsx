@@ -36,7 +36,7 @@ const GET_PROYECTOS = gql`
 const inter = Inter({ subsets: ["latin"] });
 
 export async function getStaticProps() {
-  const rendersPosiblesId = ["6lD3JuM9cCIB3GLMXIBDhY"];
+  const rendersPosiblesId = ["6lD3JuM9cCIB3GLMXIBDhY", "7xinD0xC3kjmDLZqC8tJI7"];
 
   const selectedId =
     rendersPosiblesId[Math.floor(Math.random() * rendersPosiblesId.length)];
