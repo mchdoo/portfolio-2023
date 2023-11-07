@@ -1,6 +1,8 @@
 import {TypePortfolioPost, TypePortfolioPostSkeleton} from "@/lib/types";
 import PostCard from "./postCard";
 import { client } from "@/lib/contentful";
+import LoadingComponent from "@/components/loadingComponent";
+import { Suspense } from "react";
 
 const getAllPosts = async () => {
   const {items} = await client.getEntries<TypePortfolioPostSkeleton>({content_type: "portfolioPost"});
@@ -17,8 +19,10 @@ async function BlogPage() {
         # Todos los posts
       </p>
       <section className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post: TypePortfolioPost<any, any>, index:number) => (
-          <PostCard post={post} key={index} />
+        {posts.map((post: TypePortfolioPost<any, any>, index: number) => (
+          <Suspense fallback={<LoadingComponent fallback />}>
+            <PostCard post={post} key={index} />
+          </Suspense>
         ))}
       </section>
     </main>

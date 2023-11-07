@@ -4,6 +4,7 @@ import Desarrollo from "./desarrollo";
 import { client } from "@/lib/contentful";
 import { TypePortfolioPostSkeleton } from "@/lib/types";
 import { Asset } from "contentful";
+import LoadingComponent from "@/components/loadingComponent";
 
 async function PostPage({ params }: { params: { id: string } }) {
   const post =
