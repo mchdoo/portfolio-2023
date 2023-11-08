@@ -33,7 +33,7 @@ const ImageFocus = ({
         >
           <Image
             className="rounded-xl max-h-[80vh] w-auto z-10 shadow-md shadow-black/40"
-            src={"https://" + render.fields.file?.url}
+            src={"https:" + render.fields.file?.url}
             alt={render.fields.title!}
             height={render.fields.file?.details.image?.height}
             width={render.fields.file?.details.image?.width}
