@@ -7,9 +7,9 @@ export default function Document() {
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <meta name="theme-color" content="#FDF9F3" />
         <meta name="description" content="El portfolio de Pedro Machado." />
-        <meta property="og:title" content="Pedro Machado Portfolio"></meta>
+        <meta property="og:title" content="PEDRO MACHADO"></meta>
         <meta property="og:image" content="/escape.jpg"></meta>
-        <meta property="og:description" content="Mi bello portfolio!" />
+        <meta property="og:description" content="artist, designer — portfolio" />
       </Head>
       <body>
         <Main />

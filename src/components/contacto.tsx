@@ -46,7 +46,7 @@ function Contacto() {
         </a>
 
         <a
-          href="https://instagram.com/pdromch"
+          href="https://instagram.com/pdromach_"
           target="_blank"
           className="bg-fore text-back p-6 rounded-full transition-all hover:bg-accent-1 duration-200"
         >
