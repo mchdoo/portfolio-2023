@@ -6,7 +6,7 @@ function Contacto() {
       <h1 className="font-migra text-6xl text-center">Contacto</h1>
 
       <a
-        href="mailto:contacto@pedromachado.net"
+        href="mailto:pedromachadofulcheri@gmail.com"
         className="flex gap-1 items-center my-6"
       >
         <span className="">
@@ -25,7 +25,7 @@ function Contacto() {
           </svg>
         </span>
         {""}
-        contacto@pedromachado.net
+        pedromachadofulcheri@gmail.com
       </a>
       <div className="inline-flex gap-6">
         <a
