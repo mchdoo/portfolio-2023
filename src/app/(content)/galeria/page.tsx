@@ -14,12 +14,12 @@ async function Galeria() {
 
   return (
     <main>
-      <Marquee
+      {/* <Marquee
         className="border-y py-2 bg-accent-2/20 border-fore uppercase"
         autoFill
       >
         Preview – página en contrucción –&nbsp;
-      </Marquee>
+      </Marquee> */}
 
       <section className="p-5">
         <Gallery renders={renders} />

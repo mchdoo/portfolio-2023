@@ -20,6 +20,8 @@ import { gql } from "@apollo/client";
 import Link from "next/link";
 import RenderResult from "next/dist/server/render-result";
 import { AnimatePresence, motion } from "framer-motion";
+import { client } from "@/lib/contentful";
+import { Asset } from "contentful";
 
 const GET_PROYECTOS = gql`
   query {
@@ -36,31 +38,21 @@ const GET_PROYECTOS = gql`
 const inter = Inter({ subsets: ["latin"] });
 
 export async function getStaticProps() {
-  const rendersPosiblesId = ["6lD3JuM9cCIB3GLMXIBDhY", "7xinD0xC3kjmDLZqC8tJI7"];
+  const rendersPosiblesId = [
+    "6lD3JuM9cCIB3GLMXIBDhY",
+    "7xinD0xC3kjmDLZqC8tJI7",
+  ];
 
   const selectedId =
     rendersPosiblesId[Math.floor(Math.random() * rendersPosiblesId.length)];
 
   const { data: proyectos } = await apollo.query({ query: GET_PROYECTOS });
-  const { data: render } = await apollo.query({
-    query: gql`
-      query Render($selectedId: String!) {
-        asset(id: $selectedId) {
-          url
-          height
-          width
-        }
-      }
-    `,
-    variables: {
-      selectedId,
-    },
-  });
+  const render = await client.getAsset("wRNe99SnX39ZvRs3czQYk");
 
   return {
     props: {
       proyectos: proyectos.proyectoCollection.items,
-      render: render.asset,
+      render,
     },
   };
 }
@@ -70,13 +62,12 @@ export default function Home({
   render,
 }: {
   proyectos: Array<{ nombre: string; desc: string; href: string }>;
-  render: { url: string; height: number; width: number };
+  render: Asset<undefined, string>;
   loading: boolean;
 }) {
   const container = useRef<HTMLElement>(null);
 
   initAnimations(container);
-
   return (
     <>
       <main
@@ -89,14 +80,14 @@ export default function Home({
             className="relative inset-0 h-full flex flex-col p-8 md:p-12 justify-center md:items-between"
           >
             <Image
-              src={render.url}
-              height={render.height}
-              width={render.width}
+              src={"https:" + render.fields.file?.url!}
+              height={render.fields.file?.details.image?.height}
+              width={render.fields.file?.details.image?.width}
               alt="hero"
               id="render"
               priority={true}
               quality={100}
-              className="-z-20 absolute top-0 left-0 h-screen p-3 rounded-3xl"
+              className="brightness-90 -z-20 absolute top-0 left-0 h-screen p-3 rounded-3xl"
               style={{ objectFit: "cover", objectPosition: "center" }}
             />
             <div className="flex flex-col lg:flex-row justify-between">

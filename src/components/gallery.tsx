@@ -14,7 +14,7 @@ function Gallery({ renders }: { renders: Asset<undefined, string>[] }) {
   > | null>(null);
 
   return (
-    <div className="gap-5 columns-1 sm:columns-2 md:columns-3 lg:columns-4">
+    <div className="gap-5 columns-2 md:columns-3 lg:columns-4">
       {renders.map((render, index) => (
         <RenderImage
           onClick={() => setSelectedImage(render)}
