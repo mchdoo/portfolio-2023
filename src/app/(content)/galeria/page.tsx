@@ -21,7 +21,7 @@ async function Galeria() {
         Preview – página en contrucción –&nbsp;
       </Marquee> */}
 
-      <section className="p-5">
+      <section className="p-3">
         <Gallery renders={renders} />
       </section>
 

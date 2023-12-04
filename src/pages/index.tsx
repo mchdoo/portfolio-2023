@@ -77,7 +77,7 @@ export default function Home({
         <section id="inicio" className="relative fillscreen w-screen">
           <div
             id="hero-content"
-            className="relative inset-0 h-full flex flex-col p-8 md:p-12 justify-center md:items-between"
+            className="relative inset-0 h-full flex flex-col p-12 md:p-20 justify-center md:items-between"
           >
             <Image
               src={"https:" + render.fields.file?.url!}
@@ -87,7 +87,7 @@ export default function Home({
               id="render"
               priority={true}
               quality={100}
-              className="brightness-90 -z-20 absolute top-0 left-0 h-screen p-3 rounded-3xl"
+              className="brightness-90 -z-20 absolute top-0 left-0 h-screen p-6 rounded-[3rem]"
               style={{ objectFit: "cover", objectPosition: "center" }}
             />
             <div className="flex flex-col lg:flex-row justify-between">
@@ -99,7 +99,7 @@ export default function Home({
               />
               <Link
                 id="galeria-button"
-                className="self-center min-w-fit p-3 mt-6 rounded-full bg-back text-fore text-xs"
+                className="self-center min-w-fit p-5 mt-6 rounded-full bg-back text-fore text-xs"
                 href={"/blog"}
               >
                 Ir al blog -&gt;
@@ -112,8 +112,8 @@ export default function Home({
               <p className="tag font-migra-italic text-back text-4xl md:text-6xl">
                 artist, designer
               </p>
-              <p className="tag font-sans uppercase font-thin text-back text-xl md:text-3xl">
-                necochea, argentina
+              <p className="tag text-back text-xs md:text-xl uppercase">
+                based in argentina
               </p>
             </div>
             <h3

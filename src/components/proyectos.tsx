@@ -11,7 +11,7 @@ function Proyectos({
   const router = useRouter();
   return (
     <>
-      <h1 id="title-proyectos" className="font-migra text-6xl lg:text-8xl">
+      <h1 id="title-proyectos" className=" font-migra text-6xl lg:text-8xl">
         Proyectos
       </h1>
       <div className="w-full">

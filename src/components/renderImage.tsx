@@ -17,12 +17,12 @@ export default function RenderImage({
 
   return (
     <Suspense fallback={<LoadingComponent fallback />}>
-      <div className="first-of-type:mt-0 mt-5 relative">
+      <div className="first-of-type:mt-0 mt-3 relative">
         <Image
           onMouseOver={() => setHovering(true)}
           onMouseLeave={() => setHovering(false)}
           onClick={() => onClick()}
-          className={`w-full rounded-lg hover:scale-95 transition-all cursor-pointer active:scale-100 max-h-[300px] object-center object-cover`}
+          className={`w-full rounded-lg transition-all cursor-pointer active:scale-100 max-h-[300px] object-center object-cover`}
           alt={file!.fileName}
           src={url}
           height={file!.details.image!.height / 5}

@@ -15,7 +15,7 @@ const ImageFocus = ({
     <AnimatePresence>
       <motion.div
         transition={{ duration: 0.5 }}
-        className="fixed inset-0 flex flex-col items-center justify-start z-40 p-3 py-10"
+        className="fixed inset-0 flex flex-col items-center justify-start z-40 p-3 py-12"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -36,11 +36,10 @@ const ImageFocus = ({
             height={render.fields.file?.details.image?.height! / 2}
             width={render.fields.file?.details.image?.width! / 2}
           />
-          <div className="absolute inset-0 bg-white rounded-2xl -z-10"></div>
         </motion.div>
 
         <motion.div
-          className={`cursor-normal text-center bg-white/20 backdrop-blur-xl w-fit grid place-items-center p-2 px-4 backdrop-brightness-100 rounded-${render.fields.description ? '2xl' : 'full'} -mt-5 z-50`}
+          className={`cursor-normal text-center bg-black/20 backdrop-blur-xl w-fit grid place-items-center p-4 backdrop-brightness-100 rounded-${render.fields.description ? '2xl' : 'full'} mt-5 z-50`}
           transition={{
             delay: 1.3,
           }}
@@ -49,7 +48,7 @@ const ImageFocus = ({
           exit={{ y: 50, opacity: 0 }}
         >
           <p
-            className={`drop-shadow text-back font-migra-italic text-2xl capitalize`}
+            className={`drop-shadow text-back font-migra-italic text-3xl capitalize`}
           >
             « {render.fields.title} »
           </p>
@@ -62,7 +61,7 @@ const ImageFocus = ({
       </motion.div>
       <button
         onClick={() => onClose()}
-        className="text-white p-1 px-2 fixed left-1/2 -translate-x-1/2 top-2 z-50"
+        className="text-white p-1 px-2 fixed left-1/2 -translate-x-1/2 top-4 z-50"
       >
         <span className="flex items-center gap-1 text-xs">
           <Cross1Icon />
