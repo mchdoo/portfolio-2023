@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { Cross1Icon } from "@radix-ui/react-icons";
 
+
+
 const ImageFocus = ({
   render,
   onClose,
@@ -30,7 +32,7 @@ const ImageFocus = ({
           className="p-1 h-fit max-w-3xl relative z-40"
         >
           <Image
-            className="rounded-xl max-h-[75svh] w-auto z-10 shadow-black/40"
+            className="shadow-2xl rounded-xl max-h-[75svh] w-auto z-10 shadow-black/40"
             src={"https:" + render.fields.file?.url}
             alt={render.fields.title!}
             height={render.fields.file?.details.image?.height! / 2}
@@ -39,7 +41,7 @@ const ImageFocus = ({
         </motion.div>
 
         <motion.div
-          className={`cursor-normal text-center bg-black/20 backdrop-blur-xl w-fit grid place-items-center p-4 backdrop-brightness-100 rounded-${render.fields.description ? '2xl' : 'full'} mt-5 z-50`}
+          className={`shadow-xl cursor-normal text-center bg-black/20 backdrop-blur-xl w-fit grid place-items-center p-4 backdrop-brightness-100 rounded-${render.fields.description ? 'xl' : 'full'} mt-5 z-50`}
           transition={{
             delay: 1.3,
           }}
@@ -48,7 +50,7 @@ const ImageFocus = ({
           exit={{ y: 50, opacity: 0 }}
         >
           <p
-            className={`drop-shadow text-back font-migra-italic text-3xl capitalize`}
+            className={` text-back font-migra-italic text-3xl capitalize`}
           >
             « {render.fields.title} »
           </p>
@@ -61,7 +63,7 @@ const ImageFocus = ({
       </motion.div>
       <button
         onClick={() => onClose()}
-        className="text-white p-1 px-2 fixed left-1/2 -translate-x-1/2 top-4 z-50"
+        className="bg-black/20 rounded-full text-back p-1 px-2 fixed left-1/2 -translate-x-1/2 top-4 z-50"
       >
         <span className="flex items-center gap-1 text-xs">
           <Cross1Icon />
@@ -73,7 +75,7 @@ const ImageFocus = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed backdrop-blur-md inset-0 z-10 bg-black/50 cursor-pointer"
+        className="fixed backdrop-blur-lg inset-0 z-10 bg-black/0 cursor-pointer"
       ></motion.div>
     </AnimatePresence>
   );

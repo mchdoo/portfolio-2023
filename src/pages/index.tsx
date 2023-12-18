@@ -23,6 +23,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { client } from "@/lib/contentful";
 import { Asset } from "contentful";
 
+
 const GET_PROYECTOS = gql`
   query {
     proyectoCollection {
@@ -125,7 +126,8 @@ export default function Home({
             </h3>
           </div>
         </section>
-
+        <div>
+        </div>
         <section
           id="proyectos"
           className="flex flex-col md:flex-row items-start md:items-center gap-12 px-6 mt-20"
